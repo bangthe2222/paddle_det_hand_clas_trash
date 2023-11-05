@@ -169,7 +169,7 @@ def classify_image(infer_config, predictor, img):
             label = label_[idx]
     else:
         label = idx
-    print(label, prob)
+    # print(label, prob)
     
     return label, prob
 

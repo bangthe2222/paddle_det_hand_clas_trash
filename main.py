@@ -5,14 +5,15 @@ import time
 
 from utils.infer import PredictConfig, predict_image, classify_image
 import argparse
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
 
-    parser.add_argument("--infer_det_cfg", type=str, default="./det/infer_cfg.yml", help="infer_det_cfg.yml")
+    parser.add_argument("--infer_det_cfg", type=str, default="./det/infer_picodet_320_cfg.yml", help="infer_det_cfg.yml")
     parser.add_argument(
         '--det_onnx_file', type=str, default="./det/hand_object_detect_picodet_s_320.onnx", help="onnx model file path")
     
-    parser.add_argument("--infer_clas_cfg", type=str, default="./clas/infer_cfg.yml", help="infer_clas_cfg.yml")
+    parser.add_argument("--infer_clas_cfg", type=str, default="./clas/infer_mbnetv3_cfg.yml", help="infer_clas_cfg.yml")
     parser.add_argument(
         '--clas_onnx_file', type=str, default="./clas/4clas_trash_MobileNetV3_x_1_0_95_7.onnx", help="onnx model file path")
 
@@ -33,11 +34,11 @@ if __name__ == "__main__":
     cap = cv2.VideoCapture(0)
     cap.set(cv2.CAP_PROP_FRAME_WIDTH, 1280)
     cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 720)
-
+    
     while True:
         _, frame = cap.read()
         height, width = frame.shape[:2]
-        print(height, width)
+        # print(height, width)
         t1 = time.time()
         boxes = predict_image(infer_config_det, predictor_det, frame, im_show=False)
         # print(boxes)
@@ -56,6 +57,7 @@ if __name__ == "__main__":
             
             frame = cv2.putText(frame, str(clas) + " :" + str(prob), (x_min,y_min + 20), cv2.FONT_HERSHEY_SIMPLEX, 1, (255,0,255),1)
             frame = cv2.rectangle(frame, (x_min, y_min), (x_max, y_max), (255,0,255), 1, cv2.LINE_AA) 
+
         cv2.imshow("frame", frame)
         cv2.waitKey(1)
             
