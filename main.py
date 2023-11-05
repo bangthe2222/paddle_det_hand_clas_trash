@@ -39,6 +39,7 @@ if __name__ == "__main__":
         _, frame = cap.read()
         height, width = frame.shape[:2]
         # print(height, width)
+        frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
         t1 = time.time()
         boxes = predict_image(infer_config_det, predictor_det, frame, im_show=False)
         # print(boxes)
@@ -58,6 +59,7 @@ if __name__ == "__main__":
             frame = cv2.putText(frame, str(clas) + " :" + str(prob), (x_min,y_min + 20), cv2.FONT_HERSHEY_SIMPLEX, 1, (255,0,255),1)
             frame = cv2.rectangle(frame, (x_min, y_min), (x_max, y_max), (255,0,255), 1, cv2.LINE_AA) 
 
+        frame = cv2.cvtColor(frame, cv2.COLOR_RGB2BGR)
         cv2.imshow("frame", frame)
         cv2.waitKey(1)
             
