@@ -1,5 +1,5 @@
 mode: paddle
-draw_threshold: 0.5
+draw_threshold: 0.7
 metric: VOC
 use_dynamic_shape: false
 arch: GFL
